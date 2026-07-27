@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Schibsted_Grotesk, Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
@@ -9,14 +9,23 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Work — Studio",
+  description: "Commercial video, social content and brand films.",
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const display = Schibsted_Grotesk({
+  variable: "--font-display",
   display: "swap",
   subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const sans = Inter({
+  variable: "--font-sans-body",
+  display: "swap",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export default function RootLayout({
@@ -26,7 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${display.variable} ${sans.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
