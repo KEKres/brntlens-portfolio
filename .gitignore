@@ -1,0 +1,4 @@
+# Camera/export masters. Web-ready versions live in my-app/public/media/;
+# these are the uncompressed sources and must stay out of git (GitHub rejects
+# files over 100 MB, and binaries can't be removed from history later).
+media-originals/

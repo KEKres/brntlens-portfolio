@@ -4,6 +4,13 @@ export type MediaCard = {
   label: string;
   ratio: string;
   play?: boolean;
+  src?: string;
+  type?: "video" | "image";
+  /** Still frame shown before a video loads; also what non-focal cards display. */
+  poster?: string;
+  /** How media fills the card: images default to "contain" (whole picture
+   *  visible), videos to "cover" (fill the card, cropping if needed). */
+  fit?: "contain" | "cover";
 };
 
 export type DetailCard = {

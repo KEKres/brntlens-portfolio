@@ -21,6 +21,7 @@ export function Strip({ project }: { project: Project }) {
       startY = 0,
       offset = 0,
       dragging = false,
+      suppressClick = false,
       axisLocked: "x" | "y" | null = null;
 
     const step = () => {
@@ -86,6 +87,7 @@ export function Strip({ project }: { project: Project }) {
       dragging = false;
       wrap.classList.remove("dragging");
       const dx = e.clientX - startX;
+      suppressClick = axisLocked === "x";
       if (axisLocked === "x" && Math.abs(dx) > 50) {
         goTo(virtualRef.current + (dx < 0 ? 1 : -1));
       } else if (axisLocked === "x") {
@@ -104,6 +106,17 @@ export function Strip({ project }: { project: Project }) {
       }
     };
 
+    // A horizontal drag ends with a click event on the card underneath;
+    // swallow it so dragging never toggles video playback.
+    const onClickCapture = (e: MouseEvent) => {
+      if (suppressClick) {
+        e.stopPropagation();
+        e.preventDefault();
+        suppressClick = false;
+      }
+    };
+    wrap.addEventListener("click", onClickCapture, true);
+
     strip.addEventListener("transitionend", normalize);
     wrap.addEventListener("pointerdown", onDown);
     wrap.addEventListener("pointermove", onMove);
@@ -115,6 +128,7 @@ export function Strip({ project }: { project: Project }) {
     jump();
 
     return () => {
+      wrap.removeEventListener("click", onClickCapture, true);
       strip.removeEventListener("transitionend", normalize);
       wrap.removeEventListener("pointerdown", onDown);
       wrap.removeEventListener("pointermove", onMove);
