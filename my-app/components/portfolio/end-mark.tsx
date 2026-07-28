@@ -4,7 +4,7 @@ export function EndMark() {
       <span>
         <em>End of selected work.</em>
       </span>
-      <span>Melbourne, AU &#183; 2024–2026</span>
+      <span>Melbourne, AU &#183; 2023–2026</span>
     </div>
   );
 }
